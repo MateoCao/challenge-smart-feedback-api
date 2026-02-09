@@ -5,7 +5,7 @@ from nltk.corpus import stopwords
 import joblib
 import nltk
 
-from preprocess import load_data, split_dataset
+from training.preprocess import load_data, split_dataset, clean_text
 
 nltk.download('stopwords', quiet=True)
 
@@ -22,7 +22,9 @@ def train():
     pipeline = Pipeline([
         ("vectorizer", TfidfVectorizer(
             stop_words=stop_words_es,
-            max_features=8000,
+            preprocessor=clean_text,
+            min_df=5,
+            max_features=1500,
             ngram_range=(1, 2)
         )),
         ("model", LogisticRegression(max_iter=1000)) # Asegurar convergencia
