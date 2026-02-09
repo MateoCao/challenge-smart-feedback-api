@@ -8,7 +8,6 @@ def clean_text(text: str):
 def load_data(ruta:  str):
     """Carga los datos desde un archivo CSV y asigna valores numéricos a las etiquetas de sentiment."""
     df = pd.read_csv(ruta)
-    df["message"] = df["message"].apply(clean_text)
     df["sentiment_num"] = df["sentiment"].map({
         "positivo": 2,
         "neutral": 1,
@@ -22,5 +21,6 @@ def split_dataset(df, test_size=0.2, random_state=42):
         df["message"],
         df["sentiment_num"],
         test_size=test_size,
-        random_state=random_state
+        random_state=random_state,
+        stratify=df["sentiment_num"]
     )
