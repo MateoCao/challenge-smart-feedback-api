@@ -1,5 +1,9 @@
 from pydantic import BaseModel
-from typing import List
 
 class PredictionRequest(BaseModel):
-    texts: List[str]
+    text: str
+    
+class PredictionResponse(BaseModel):
+    text: str
+    sentiment: str
+    confidence: float
