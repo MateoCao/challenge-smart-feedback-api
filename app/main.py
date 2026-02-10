@@ -14,8 +14,8 @@ def health_check():
 @app.post("/predict")
 def predict_sentiment(request: PredictionRequest):
     try:
-        if not request.texts:
-            raise HTTPException(status_code=400, detail="La lista de textos no puede estar vacía.")
-        return model.predict(request.texts)
+        if not request.text:
+            raise HTTPException(status_code=400, detail="El texto no puede estar vacío.")
+        return model.predict(request.text)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

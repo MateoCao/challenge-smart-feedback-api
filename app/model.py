@@ -1,5 +1,6 @@
 import joblib
 import numpy as np
+from app.schemas import PredictionResponse
 
 MODEL_PATH = "models/sentiment_model.joblib"
 
@@ -12,15 +13,13 @@ class SentimentModel:
             2: "positivo"
         }
 
-    def predict(self, texts: list[str]) -> list[dict]:
-        probabilities = self.model.predict_proba(texts)
-        predictions = np.argmax(probabilities, axis=1)
+    def predict(self, text: str) -> dict:
+        probabilities = self.model.predict_proba([text])[0] 
+        prediction = np.argmax(probabilities)
+        score = float(probabilities[prediction])
 
-        results = []
-        for pred, probs in zip(predictions, probabilities):
-            results.append({
-                "sentiment": self.label_map[pred],
-                "score": float(np.max(probs))
-            })
-
-        return results
+        return PredictionResponse(
+            text=text,
+            sentiment=self.label_map[prediction],
+            confidence=score
+        )
