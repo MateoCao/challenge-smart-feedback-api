@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 def clean_text(text: str):
+    """Convierte el texto a minúsculas y elimina signos de puntuación."""
     return re.sub(r'[^\w\s]', '', text.lower())
 
 def load_data(ruta:  str):
