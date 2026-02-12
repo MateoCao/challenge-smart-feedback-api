@@ -21,5 +21,5 @@ class SentimentModel:
         return PredictionResponse(
             text=text,
             sentiment=self.label_map[prediction],
-            confidence=score
+            confidence=round(score,5)
         )
