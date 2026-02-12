@@ -27,7 +27,7 @@ def train():
             max_features=1500,
             ngram_range=(1, 2)
         )),
-        ("model", LogisticRegression(max_iter=1000)) # Asegurar convergencia
+        ("model", LogisticRegression(max_iter=1000))
     ])
 
     pipeline.fit(X_train, y_train)

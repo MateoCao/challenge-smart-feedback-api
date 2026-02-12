@@ -34,7 +34,7 @@ python -m venv venv
 ```
 3) Activar entorno.
 
--  En windows:
+-  En Windows:
 ```bash
 venv\Scripts\activate
 ```
@@ -50,12 +50,12 @@ pip install -r requirements.txt
 
 ## Uso
 
-El repositorio incluye el modelo preentrenado en la carpeta /models. Si se desea reentrenar el modelo desde cero ejecutar desde la carpeta root:
+El repositorio incluye el modelo preentrenado en la carpeta `/models`. Si se desea reentrenar el modelo desde cero ejecutar desde la carpeta root:
 
 ```bash
 python -m training.train
 ```
-Esto generará el archivo .joblib del modelo entrenado en /models. También se descargaran las stopwords de NLTK necesarias para el preprocesamiento. 
+Esto generará el archivo `.joblib` del modelo entrenado en `/models`. También se descargaran las stopwords de NLTK necesarias para el preprocesamiento. 
 
 Para evaluar el rendimiento del modelo sobre el conjunto de test:
 
@@ -66,17 +66,28 @@ python -m training.evaluate
 Esto mostrará en consola el **Classification Report** y la **Confusion Matrix** junto con otras métricas de evaluación y un análisis de confianza media y mínima.
 
 ## API (FastAPI)
-La API tiene como objetivo exponer el modelo entrenado a través de un endpoint que recibe un texto en formato JSON.
+La API expone el modelo entrenado a través de un endpoint (`/analyze`) que recibe un texto en formato JSON.
+### Ejecución
+Para iniciar el servidor:
+```bash
+uvicorn app.main:app --reload
+```
+La API estará disponible en `http://127.0.0.1:8000`.
+### Documentación interactiva
+FastAPI genera automáticamente documentación técnica que permite probar el endpoint desde el navegador:
+- **Swagger UI**: `http://127.0.0.1:8000/docs`
+
 ### Ejemplo de consulta
 El endpoint recibe un objeto JSON con el texto a analizar y devuelve el sentimiento junto con el score de confianza.
+
 #### Request
-```bash
+```json
 {
   "text": "Imposible trabajar así. La plataforma es extremadamente inestable y el soporte técnico brilla por su ausencia, devolviendo respuestas predefinidas que no resuelven nada. El sistema se queda colgado constantemente, lo que nos hace perder horas de trabajo cada semana. Es una situación crítica y, de no solucionarse hoy mismo, empezaremos la migración a otra herramienta."
 }
 ```
 #### Response
-```bash
+```json
 {
   "text": "Imposible trabajar así. La plataforma es extremadamente inestable y el soporte técnico brilla por su ausencia, devolviendo respuestas predefinidas que no resuelven nada. El sistema se queda colgado constantemente, lo que nos hace perder horas de trabajo cada semana. Es una situación crítica y, de no solucionarse hoy mismo, empezaremos la migración a otra herramienta.",
   "sentiment": "negativo",
