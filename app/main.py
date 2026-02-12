@@ -11,7 +11,7 @@ def health_check():
         "status": "online"
     }
 
-@app.post("/predict")
+@app.post("/analyze")
 def predict_sentiment(request: PredictionRequest):
     try:
         if not request.text:
